@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free AI Paraphraser - Rewrite Text Instantly</title>
+<meta name="description" content="Free AI-powered text rewriter. No login required. Perfect for students, writers, and SEO content creators.">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#6366f1',
+        dark: '#0f172a',
+        card: '#1e293b',
+      }
+    }
+  }
+}
+</script>
+</head>
+<body class="bg-dark text-white min-h-screen">
+
+<!-- Header -->
+<header class="border-b border-gray-800">
+  <div class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+        <i class="fa fa-pencil"></i>
+      </div>
+      <span class="font-bold text-lg">AI Paraphraser</span>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="bg-green-900/50 text-green-400 text-xs px-2 py-1 rounded-full border border-green-700">
+        <i class="fa fa-circle text-green-400" style="font-size:6px;vertical-align:middle"></i> Online
+      </span>
+      <span class="bg-gray-800 text-gray-300 text-xs px-2 py-1 rounded-full">No Login</span>
+    </div>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="max-w-4xl mx-auto px-4 pt-12 pb-6 text-center">
+  <h1 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-purple-400 bg-clip-text text-transparent">
+    Rewrite Any Text With AI
+  </h1>
+  <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+    Free AI-powered paraphrasing tool. Rewrite essays, articles, and content in seconds.
+    No sign-up, no limits, no hassle.
+  </p>
+</section>
+
+<!-- Tool -->
+<section class="max-w-4xl mx-auto px-4 pb-8">
+  <div class="bg-card rounded-2xl p-6 border border-gray-700 shadow-2xl">
+
+    <!-- Controls -->
+    <div class="flex flex-wrap gap-3 mb-4">
+      <label class="flex-1 min-w-[120px]">
+        <span class="text-xs text-gray-400 block mb-1">Style</span>
+        <select id="style" class="w-full bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm focus:border-primary focus:outline-none">
+          <option value="professional">Professional</option>
+          <option value="casual">Casual</option>
+          <option value="creative">Creative</option>
+          <option value="academic">Academic</option>
+          <option value="fluent">Fluent (Fix grammar)</option>
+        </select>
+      </label>
+      <label class="flex-1 min-w-[120px]">
+        <span class="text-xs text-gray-400 block mb-1">Length</span>
+        <select id="length" class="w-full bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm focus:border-primary focus:outline-none">
+          <option value="similar">Similar</option>
+          <option value="shorter">Shorter</option>
+          <option value="longer">Longer</option>
+        </select>
+      </label>
+      <label class="flex-1 min-w-[120px]">
+        <span class="text-xs text-gray-400 block mb-1">Language</span>
+        <select id="lang" class="w-full bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm focus:border-primary focus:outline-none">
+          <option value="auto">Auto Detect</option>
+          <option value="en">English</option>
+          <option value="zh">Chinese</option>
+        </select>
+      </label>
+    </div>
+
+    <!-- Input -->
+    <div class="mb-4">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-xs text-gray-400">Input Text</span>
+        <span id="charCount" class="text-xs text-gray-500">0 / 2000</span>
+      </div>
+      <textarea id="inputText" rows="6" maxlength="2000"
+        placeholder="Paste your text here to rewrite..."
+        class="w-full bg-gray-800 border border-gray-600 rounded-xl px-4 py-3 text-white text-sm resize-none focus:border-primary focus:outline-none placeholder-gray-500"></textarea>
+    </div>
+
+    <!-- Button -->
+    <button id="rewriteBtn" onclick="rewrite()"
+      class="w-full bg-primary hover:bg-indigo-600 disabled:bg-gray-700 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-xl transition-all flex items-center justify-center gap-2">
+      <i class="fa fa-refresh"></i>
+      <span id="btnText">Rewrite Text</span>
+    </button>
+
+    <!-- Error -->
+    <div id="errorBox" class="hidden mt-4 p-3 bg-red-900/30 border border-red-700 rounded-lg text-red-400 text-sm"></div>
+
+    <!-- Output -->
+    <div id="outputArea" class="hidden mt-6">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-xs text-gray-400">Rewritten Text</span>
+        <button onclick="copyOutput()" class="text-xs text-primary hover:text-indigo-400 transition-colors">
+          <i class="fa fa-copy"></i> Copy
+        </button>
+      </div>
+      <div id="outputText"
+        class="w-full bg-gray-800 border border-gray-600 rounded-xl px-4 py-3 text-sm min-h-[120px] whitespace-pre-wrap"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Features -->
+<section class="max-w-4xl mx-auto px-4 pb-12">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="bg-card border border-gray-700 rounded-xl p-5 text-center">
+      <div class="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center mx-auto mb-3">
+        <i class="fa fa-bolt text-primary"></i>
+      </div>
+      <h3 class="font-semibold mb-1">Instant Results</h3>
+      <p class="text-gray-400 text-sm">AI-powered rewriting in under 5 seconds.</p>
+    </div>
+    <div class="bg-card border border-gray-700 rounded-xl p-5 text-center">
+      <div class="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center mx-auto mb-3">
+        <i class="fa fa-lock text-green-400"></i>
+      </div>
+      <h3 class="font-semibold mb-1">No Login Required</h3>
+      <p class="text-gray-400 text-sm">Use instantly. No account, no email, no spam.</p>
+    </div>
+    <div class="bg-card border border-gray-700 rounded-xl p-5 text-center">
+      <div class="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center mx-auto mb-3">
+        <i class="fa fa-globe text-purple-400"></i>
+      </div>
+      <h3 class="font-semibold mb-1">Multi-Language</h3>
+      <p class="text-gray-400 text-sm">Works with English, Chinese, and 20+ languages.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="max-w-4xl mx-auto px-4 pb-12">
+  <div class="bg-gradient-to-r from-primary/20 to-purple-500/20 border border-primary/30 rounded-2xl p-6 text-center">
+    <h3 class="text-xl font-bold mb-2">Need Unlimited Access or API Key?</h3>
+    <p class="text-gray-400 mb-4 text-sm">Get unlimited usage, API access for developers, or a custom-built AI tool like this one.</p>
+    <div class="flex flex-wrap justify-center gap-3">
+      <a href="https://t.me/shenglizhigejack" target="_blank" rel="noopener"
+        class="inline-flex items-center gap-2 bg-[#2AABEE] hover:bg-[#2291c9] text-white font-semibold py-2 px-5 rounded-xl transition-all">
+        <i class="fa fa-telegram"></i> @shenglizhigejack
+      </a>
+      <span class="text-gray-500 text-sm flex items-center">$5 unlimited · $15 API Key · $50 custom tool</span>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="border-t border-gray-800 py-6 text-center text-gray-500 text-xs">
+  <p>&copy; 2026 AI Paraphraser. Free for everyone. Built with &#9829; and AI.</p>
+</footer>
+
+<script>
+let loading = false;
+
+async function rewrite() {
+  const input = document.getElementById('inputText').value.trim();
+  if (!input) return;
+
+  const btn = document.getElementById('rewriteBtn');
+  const btnText = document.getElementById('btnText');
+  const errorBox = document.getElementById('errorBox');
+  const outputArea = document.getElementById('outputArea');
+  const outputText = document.getElementById('outputText');
+
+  loading = true;
+  btn.disabled = true;
+  btnText.textContent = 'Rewriting...';
+  errorBox.classList.add('hidden');
+  outputArea.classList.add('hidden');
+
+  const style = document.getElementById('style').value;
+  const length = document.getElementById('length').value;
+  const lang = document.getElementById('lang').value;
+
+  const stylePrompts = {
+    professional: 'Rewrite the following text in a professional and polished tone:',
+    casual: 'Rewrite the following text in a casual and conversational tone:',
+    creative: 'Rewrite the following text in a creative and engaging style:',
+    academic: 'Rewrite the following text in a formal academic style:',
+    fluent: 'Rewrite the following text to fix grammar errors and improve fluency:',
+  };
+
+  const lengthPrompts = {
+    similar: 'Keep the length roughly the same.',
+    shorter: 'Make it more concise and shorter.',
+    longer: 'Expand it slightly with more detail.',
+  };
+
+  const systemPrompt = `${stylePrompts[style]} ${lengthPrompts[length]} ${lang === 'zh' ? 'Output in Chinese.' : lang === 'en' ? 'Output in English.' : 'Keep the same language as the input.'} Only output the rewritten text, nothing else.`;
+
+  try {
+    const res = await fetch('/api/proxy', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'qwen-turbo',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: input }
+        ],
+        max_tokens: 2000,
+        temperature: 0.7,
+      }),
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.error || 'Request failed');
+    }
+
+    const data = await res.json();
+    const rewritten = data.choices[0].message.content.trim();
+    outputText.textContent = rewritten;
+    outputArea.classList.remove('hidden');
+  } catch (e) {
+    errorBox.textContent = 'Error: ' + e.message + '. Please try again or contact @shenglizhigejack on Telegram.';
+    errorBox.classList.remove('hidden');
+  } finally {
+    loading = false;
+    btn.disabled = false;
+    btnText.textContent = 'Rewrite Text';
+  }
+}
+
+function copyOutput() {
+  const text = document.getElementById('outputText').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = event.target.closest('button');
+    const orig = btn.innerHTML;
+    btn.innerHTML = '<i class="fa fa-check"></i> Copied';
+    setTimeout(() => { btn.innerHTML = orig; }, 2000);
+  });
+}
+
+document.getElementById('inputText').addEventListener('input', function() {
+  document.getElementById('charCount').textContent = this.value.length + ' / 2000';
+});
+</script>
+</body>
+</html>

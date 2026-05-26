@@ -1,5 +1,25 @@
 {
   "name": "ai-paraphraser",
   "version": "1.0.0",
-  "private": true
+  "private": true,
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhukaijack/free-ai-paraphraser.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/zhukaijack/free-ai-paraphraser/issues"
+  },
+  "homepage": "https://github.com/zhukaijack/free-ai-paraphraser#readme",
+  "dependencies": {
+    "@vercel/kv": "^3.0.0"
+  }
 }

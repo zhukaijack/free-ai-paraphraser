@@ -47,21 +47,48 @@ tailwind.config = {
 
 <!-- Hero -->
 <section class="max-w-5xl mx-auto px-4 pt-16 pb-8 text-center">
-  <h1 class="text-4xl md:text-5xl font-bold mb-4">
-    Your AI Writing Assistant
+  <div class="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-1.5 mb-6">
+    <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+    <span class="text-xs text-primary font-medium">AI-Powered Writing Suite</span>
+  </div>
+  <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
+    Write <span class="bg-gradient-to-r from-primary to-purple-400 bg-clip-text text-transparent">Smarter & Faster</span><br>With AI
   </h1>
-  <p class="text-gray-400 text-lg max-w-2xl mx-auto mb-6">
-    Rewrite, polish, draft emails, generate resumes — all in one place.
-    <span class="text-white font-semibold">3 free uses every day.</span> No credit card.
+  <p class="text-gray-400 text-lg max-w-2xl mx-auto mb-4">
+    Professional rewriting, emails, resumes, meeting notes, and more.
   </p>
+  <p class="text-gray-500 text-sm mb-8">
+    <span class="text-white font-semibold">3 free uses daily.</span> No credit card. Upgrade when you need more.
+  </p>
+
+  <!-- Trust / Stats -->
+  <div class="flex flex-wrap justify-center gap-6 mb-8 text-sm text-gray-400">
+    <div class="flex items-center gap-1.5">
+      <i class="fa fa-cube text-primary"></i>
+      <span><strong class="text-white">5</strong> Writing Tools</span>
+    </div>
+    <div class="flex items-center gap-1.5">
+      <i class="fa fa-sliders text-primary"></i>
+      <span><strong class="text-white">5</strong> Tone Styles</span>
+    </div>
+    <div class="flex items-center gap-1.5">
+      <i class="fa fa-bolt text-primary"></i>
+      <span><strong class="text-white">3s</strong> Response Time</span>
+    </div>
+    <div class="flex items-center gap-1.5">
+      <i class="fa fa-shield text-primary"></i>
+      <span><strong class="text-white">No</strong> Credit Card</span>
+    </div>
+  </div>
+
   <div class="flex flex-wrap justify-center gap-3">
     <button onclick="document.getElementById('toolSection').scrollIntoView({behavior:'smooth'})"
-      class="bg-primary hover:bg-indigo-600 text-white font-semibold py-3 px-6 rounded-xl transition-all text-lg">
-      <i class="fa fa-pencil"></i> Start Writing
+      class="bg-primary hover:bg-indigo-600 text-white font-semibold py-3 px-8 rounded-xl transition-all text-lg shadow-lg shadow-primary/25 hover:shadow-primary/40 transform hover:-translate-y-0.5">
+      <i class="fa fa-pencil"></i> Start Writing Free
     </button>
     <button onclick="document.getElementById('pricingSection').scrollIntoView({behavior:'smooth'})"
-      class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-xl transition-all text-lg">
-      <i class="fa fa-star"></i> Go Pro
+      class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 px-8 rounded-xl transition-all text-lg border border-gray-600 hover:border-gray-500">
+      <i class="fa fa-star"></i> View Plans
     </button>
   </div>
 </section>
@@ -124,7 +151,26 @@ tailwind.config = {
 </div>
 
 <!-- Tool Section -->
-<section id="toolSection" class="max-w-5xl mx-auto px-4 pb-8">
+<section id="toolSection" class="max-w-5xl mx-auto px-4 pb-6">
+  <!-- Tool Tags -->
+  <div class="flex flex-wrap justify-center gap-2 mb-6">
+    <span class="text-xs bg-gray-800 border border-gray-700 rounded-full px-3 py-1.5 text-gray-300 cursor-pointer hover:border-primary hover:text-primary transition-colors" onclick="document.getElementById('tool').value='paraphrase';document.getElementById('tool').dispatchEvent(new Event('change'))">
+      <i class="fa fa-refresh mr-1"></i> Rewrite
+    </span>
+    <span class="text-xs bg-gray-800 border border-gray-700 rounded-full px-3 py-1.5 text-gray-300 cursor-pointer hover:border-primary hover:text-primary transition-colors" onclick="document.getElementById('tool').value='email';document.getElementById('tool').dispatchEvent(new Event('change'))">
+      <i class="fa fa-envelope mr-1"></i> Email
+    </span>
+    <span class="text-xs bg-gray-800 border border-gray-700 rounded-full px-3 py-1.5 text-gray-300 cursor-pointer hover:border-primary hover:text-primary transition-colors" onclick="document.getElementById('tool').value='resume';document.getElementById('tool').dispatchEvent(new Event('change'))">
+      <i class="fa fa-list-alt mr-1"></i> Resume
+    </span>
+    <span class="text-xs bg-gray-800 border border-gray-700 rounded-full px-3 py-1.5 text-gray-300 cursor-pointer hover:border-primary hover:text-primary transition-colors" onclick="document.getElementById('tool').value='summary';document.getElementById('tool').dispatchEvent(new Event('change'))">
+      <i class="fa fa-file-text mr-1"></i> Summary
+    </span>
+    <span class="text-xs bg-gray-800 border border-gray-700 rounded-full px-3 py-1.5 text-gray-300 cursor-pointer hover:border-primary hover:text-primary transition-colors" onclick="document.getElementById('tool').value='leave';document.getElementById('tool').dispatchEvent(new Event('change'))">
+      <i class="fa fa-calendar-check-o mr-1"></i> Leave Request
+    </span>
+  </div>
+
   <div class="bg-card rounded-2xl p-6 border border-gray-700 shadow-2xl">
 
     <div class="flex flex-wrap gap-3 mb-4">
@@ -189,72 +235,123 @@ tailwind.config = {
   </div>
 </section>
 
+<!-- Why AivaDesk -->
+<section class="max-w-5xl mx-auto px-4 pb-6">
+  <h2 class="text-2xl md:text-3xl font-bold text-center mb-8">
+    Why <span class="bg-gradient-to-r from-primary to-purple-400 bg-clip-text text-transparent">AivaDesk</span>?
+  </h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div class="bg-card border border-gray-700 rounded-xl p-5 hover:border-gray-500 transition-colors group">
+      <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+        <i class="fa fa-bolt text-primary text-lg"></i>
+      </div>
+      <h4 class="font-semibold mb-1">Lightning Fast</h4>
+      <p class="text-xs text-gray-400">AI rewrites your text in seconds, not minutes. Keep your workflow going.</p>
+    </div>
+    <div class="bg-card border border-gray-700 rounded-xl p-5 hover:border-gray-500 transition-colors group">
+      <div class="w-10 h-10 bg-green-400/10 rounded-lg flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+        <i class="fa fa-check-circle text-green-400 text-lg"></i>
+      </div>
+      <h4 class="font-semibold mb-1">Grammar Perfect</h4>
+      <p class="text-xs text-gray-400">Every output is polished and error-free. Professional results every time.</p>
+    </div>
+    <div class="bg-card border border-gray-700 rounded-xl p-5 hover:border-gray-500 transition-colors group">
+      <div class="w-10 h-10 bg-purple-400/10 rounded-lg flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+        <i class="fa fa-sliders text-purple-400 text-lg"></i>
+      </div>
+      <h4 class="font-semibold mb-1">Multiple Styles</h4>
+      <p class="text-xs text-gray-400">Professional, casual, creative, academic — match your exact tone.</p>
+    </div>
+    <div class="bg-card border border-gray-700 rounded-xl p-5 hover:border-gray-500 transition-colors group">
+      <div class="w-10 h-10 bg-amber-400/10 rounded-lg flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+        <i class="fa fa-lock text-amber-400 text-lg"></i>
+      </div>
+      <h4 class="font-semibold mb-1">No Login Required</h4>
+      <p class="text-xs text-gray-400">Start writing immediately. Only sign up when you want to save your work.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Ad Space (reserved) -->
+<section class="max-w-5xl mx-auto px-4 pb-6">
+  <div class="bg-card border border-dashed border-gray-600 rounded-xl p-4 text-center opacity-60 hover:opacity-100 transition-opacity">
+    <span class="text-xs text-gray-500">
+      <i class="fa fa-bullhorn mr-1"></i> Sponsored — <a href="https://t.me/shenglizhigejack" class="hover:text-primary transition-colors">Advertise here</a>
+    </span>
+  </div>
+</section>
+
 <!-- Pricing Section -->
-<section id="pricingSection" class="max-w-5xl mx-auto px-4 pb-16">
-  <h2 class="text-3xl font-bold text-center mb-10">Simple Pricing</h2>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<section id="pricingSection" class="max-w-5xl mx-auto px-4 pb-12">
+  <div class="text-center mb-10">
+    <span class="text-xs bg-primary/10 border border-primary/20 rounded-full px-4 py-1 text-primary font-medium">Pricing</span>
+    <h2 class="text-3xl font-bold mt-3 mb-2">Simple, Transparent Pricing</h2>
+    <p class="text-gray-400 text-sm">Start free. Upgrade when you're ready.</p>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
 
     <!-- Free -->
-    <div class="bg-card border border-gray-700 rounded-2xl p-6 text-center">
-      <div class="text-3xl mb-3">🆓</div>
-      <h3 class="text-xl font-bold mb-1">Free</h3>
+    <div class="bg-card border border-gray-700 rounded-2xl p-6 text-center hover:border-gray-500 transition-colors">
+      <div class="w-12 h-12 bg-gray-700/50 rounded-xl flex items-center justify-center mx-auto mb-4 text-2xl">🆓</div>
+      <h3 class="text-lg font-bold mb-1">Free</h3>
       <p class="text-3xl font-bold mb-4">$0</p>
-      <ul class="text-sm text-gray-400 space-y-2 mb-6 text-left">
-        <li><i class="fa fa-check text-green-400 mr-1"></i> 3 rewrites per day</li>
-        <li><i class="fa fa-check text-green-400 mr-1"></i> All tools & styles</li>
-        <li><i class="fa fa-check text-green-400 mr-1"></i> No credit card</li>
+      <ul class="text-sm text-gray-400 space-y-2.5 mb-6 text-left">
+        <li><i class="fa fa-check text-green-400 mr-1.5"></i> 3 rewrites per day</li>
+        <li><i class="fa fa-check text-green-400 mr-1.5"></i> All 5 tools & styles</li>
+        <li><i class="fa fa-check text-green-400 mr-1.5"></i> No credit card</li>
       </ul>
       <button onclick="document.getElementById('toolSection').scrollIntoView({behavior:'smooth'})"
-        class="w-full bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2.5 rounded-xl transition-all">
-        Start Free
+        class="w-full bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2.5 rounded-xl transition-all text-sm">
+        Start Writing
       </button>
     </div>
 
     <!-- Pro -->
-    <div class="bg-card border-2 border-primary rounded-2xl p-6 text-center relative">
-      <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-white text-xs px-3 py-1 rounded-full font-bold">POPULAR</span>
-      <div class="text-3xl mb-3 mt-2">⭐</div>
-      <h3 class="text-xl font-bold mb-1">Pro</h3>
+    <div class="bg-card border-2 border-primary rounded-2xl p-6 text-center relative scale-[1.03] shadow-xl shadow-primary/10">
+      <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-white text-xs px-4 py-1 rounded-full font-bold">MOST POPULAR</span>
+      <div class="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center mx-auto mb-4 mt-1 text-2xl">⭐</div>
+      <h3 class="text-lg font-bold mb-1">Pro</h3>
       <p class="text-3xl font-bold mb-1">$5</p>
       <p class="text-xs text-gray-400 mb-4">/month</p>
-      <ul class="text-sm text-gray-400 space-y-2 mb-6 text-left">
-        <li><i class="fa fa-check text-green-400 mr-1"></i> Unlimited rewrites</li>
-        <li><i class="fa fa-check text-green-400 mr-1"></i> All tools & styles</li>
-        <li><i class="fa fa-check text-green-400 mr-1"></i> Priority processing</li>
-        <li><i class="fa fa-check text-green-400 mr-1"></i> Early access to new tools</li>
-        <li><i class="fa fa-check text-green-400 mr-1"></i> Referral rewards</li>
+      <ul class="text-sm text-gray-400 space-y-2.5 mb-6 text-left">
+        <li><i class="fa fa-check text-green-400 mr-1.5"></i> Unlimited rewrites</li>
+        <li><i class="fa fa-check text-green-400 mr-1.5"></i> All tools & styles</li>
+        <li><i class="fa fa-check text-green-400 mr-1.5"></i> Priority processing</li>
+        <li><i class="fa fa-check text-green-400 mr-1.5"></i> Early access to new tools</li>
+        <li><i class="fa fa-check text-green-400 mr-1.5"></i> Referral rewards</li>
       </ul>
       <button onclick="startSubscription()"
-        class="w-full bg-primary hover:bg-indigo-600 text-white font-semibold py-2.5 rounded-xl transition-all">
-        <i class="fa fa-credit-card"></i> Subscribe
+        class="w-full bg-primary hover:bg-indigo-600 text-white font-semibold py-2.5 rounded-xl transition-all text-sm shadow-lg shadow-primary/25">
+        <i class="fa fa-credit-card mr-1"></i> Subscribe $5/mo
       </button>
     </div>
 
     <!-- API -->
-    <div class="bg-card border border-gray-700 rounded-2xl p-6 text-center">
-      <div class="text-3xl mb-3">🔌</div>
-      <h3 class="text-xl font-bold mb-1">API</h3>
+    <div class="bg-card border border-gray-700 rounded-2xl p-6 text-center hover:border-gray-500 transition-colors">
+      <div class="w-12 h-12 bg-gray-700/50 rounded-xl flex items-center justify-center mx-auto mb-4 text-2xl">🔌</div>
+      <h3 class="text-lg font-bold mb-1">API</h3>
       <p class="text-3xl font-bold mb-1">$15</p>
       <p class="text-xs text-gray-400 mb-4">/month</p>
-      <ul class="text-sm text-gray-400 space-y-2 mb-6 text-left">
-        <li><i class="fa fa-check text-green-400 mr-1"></i> Everything in Pro</li>
-        <li><i class="fa fa-check text-green-400 mr-1"></i> API Key access</li>
-        <li><i class="fa fa-check text-green-400 mr-1"></i> 10,000 calls/month</li>
-        <li><i class="fa fa-check text-green-400 mr-1"></i> Integrate into your tools</li>
+      <ul class="text-sm text-gray-400 space-y-2.5 mb-6 text-left">
+        <li><i class="fa fa-check text-green-400 mr-1.5"></i> Everything in Pro</li>
+        <li><i class="fa fa-check text-green-400 mr-1.5"></i> API Key access</li>
+        <li><i class="fa fa-check text-green-400 mr-1.5"></i> 10,000 calls/month</li>
+        <li><i class="fa fa-check text-green-400 mr-1.5"></i> Integrate into your tools</li>
       </ul>
       <a href="https://t.me/shenglizhigejack" target="_blank" rel="noopener"
-        class="block w-full bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2.5 rounded-xl transition-all">
-        <i class="fa fa-telegram"></i> Contact for API
+        class="block w-full bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2.5 rounded-xl transition-all text-sm">
+        <i class="fa fa-telegram mr-1"></i> Contact for API
       </a>
     </div>
   </div>
 </section>
 
 <!-- Referral Section -->
-<section id="referralSection" class="max-w-5xl mx-auto px-4 pb-16 hidden">
+<section id="referralSection" class="max-w-5xl mx-auto px-4 pb-12 hidden">
   <div class="bg-gradient-to-r from-primary/10 to-purple-500/10 border border-primary/20 rounded-2xl p-6 text-center">
+    <div class="text-2xl mb-2">🎁</div>
     <h3 class="text-xl font-bold mb-2">Invite Friends, Earn Pro</h3>
-    <p class="text-gray-400 mb-4 text-sm">Share your referral link. Every 3 people who sign up = <span class="text-white font-bold">1 month Pro free.</span></p>
+    <p class="text-gray-400 mb-4 text-sm">Share your referral link. Every <span class="text-white font-bold">3 friends</span> who sign up = <span class="text-white font-bold">1 month Pro free.</span></p>
     <div class="flex flex-wrap justify-center gap-2 mb-3">
       <input id="refLink" readonly
         class="bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 text-sm text-white w-72 text-center focus:outline-none">
@@ -267,10 +364,39 @@ tailwind.config = {
   </div>
 </section>
 
+<!-- Footer Ad Space -->
+<section class="max-w-5xl mx-auto px-4 pb-8">
+  <div class="bg-card border border-dashed border-gray-600 rounded-xl p-4 text-center opacity-50 hover:opacity-100 transition-opacity">
+    <span class="text-xs text-gray-500">
+      <i class="fa fa-bullhorn mr-1"></i> Ad Space Available — <a href="https://t.me/shenglizhigejack" class="hover:text-primary transition-colors">Inquire here</a>
+    </span>
+  </div>
+</section>
+
 <!-- Footer -->
-<footer class="border-t border-gray-800 py-6 text-center text-gray-500 text-xs">
-  <p class="mb-1">&copy; 2026 AivaDesk. Built with AI. Free for everyone.</p>
-  <p>Contact: <a href="https://t.me/shenglizhigejack" class="text-primary hover:underline">@shenglizhigejack</a></p>
+<footer class="border-t border-gray-800 py-8">
+  <div class="max-w-5xl mx-auto px-4">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
+      <div class="flex items-center gap-2">
+        <div class="w-7 h-7 bg-primary rounded-lg flex items-center justify-center">
+          <i class="fa fa-magic text-xs"></i>
+        </div>
+        <span class="font-bold">AivaDesk</span>
+        <span class="text-xs text-gray-500 ml-2">AI Writing Assistant</span>
+      </div>
+      <div class="flex items-center gap-6 text-sm text-gray-400">
+        <a href="mailto:shenglizhigejack@outlook.com" class="hover:text-white transition-colors">
+          <i class="fa fa-envelope mr-1"></i> Email
+        </a>
+        <a href="https://t.me/shenglizhigejack" target="_blank" rel="noopener" class="hover:text-white transition-colors">
+          <i class="fa fa-telegram mr-1"></i> Telegram
+        </a>
+      </div>
+    </div>
+    <div class="text-center text-gray-500 text-xs">
+      <p>&copy; 2026 AivaDesk. Built for writers, creators, and professionals.</p>
+    </div>
+  </div>
 </footer>
 
 <script>
@@ -644,6 +770,17 @@ document.getElementById('tool').addEventListener('change', function() {
   if (this.value === 'leave') {
     styleEl.value = 'professional';
   }
+  // Update tool tags
+  document.querySelectorAll('#toolSection .flex-wrap span').forEach(tag => {
+    const toolVal = tag.getAttribute('onclick')?.match(/value='(\w+)'/)?.[1];
+    if (toolVal === this.value) {
+      tag.classList.add('border-primary', 'text-primary');
+      tag.classList.remove('border-gray-700', 'text-gray-300');
+    } else {
+      tag.classList.remove('border-primary', 'text-primary');
+      tag.classList.add('border-gray-700', 'text-gray-300');
+    }
+  });
 });
 </script>
 </body>

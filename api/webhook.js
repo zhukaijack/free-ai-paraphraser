@@ -1,5 +1,19 @@
-import { verifyWebhook, getSubscription } from '../../lib/paypal.js';
-import { updateUser, getUser, createUser } from '../../lib/kv.js';
+import { parseWebhookEvent } from '../../lib/gumroad.js';
+import { updateUser } from '../../lib/kv.js';
+
+async function readBody(req) {
+  if (req.body && typeof req.body === 'object' && !Buffer.isBuffer(req.body)) {
+    return req.body;
+  }
+  // Read raw body for form-encoded data
+  const chunks = [];
+  for await (const chunk of req) chunks.push(chunk);
+  const raw = Buffer.concat(chunks).toString('utf-8');
+  const params = new URLSearchParams(raw);
+  const body = {};
+  for (const [k, v] of params) body[k] = v;
+  return body;
+}
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -7,42 +21,25 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Verify webhook signature
-    const verified = await verifyWebhook(req.headers, req.body);
-    if (!verified) {
-      return res.status(403).json({ error: 'Invalid webhook signature' });
+    const body = await readBody(req);
+    const event = parseWebhookEvent(body);
+
+    if (!event) {
+      return res.status(200).json({ received: true, skipped: true });
     }
 
-    const event = req.body;
-    const eventType = event.event_type;
-
-    if (eventType === 'BILLING.SUBSCRIPTION.ACTIVATED' || eventType === 'BILLING.SUBSCRIPTION.CREATED') {
-      const subscriptionId = event.resource.id;
-      const sub = await getSubscription(subscriptionId);
-      const email = sub.subscriber?.email_address;
-
+    if (event.type === 'sale') {
+      const email = event.email?.toLowerCase();
       if (email) {
         await updateUser(email, {
           tier: 'pro',
           proExpiry: new Date(Date.now() + 30 * 86400000).toISOString(),
         });
-
-        // Send activation to subscriber.payer.email as well
-        const payerEmail = sub.subscriber?.payer?.email_address;
-        if (payerEmail && payerEmail !== email) {
-          await updateUser(payerEmail, {
-            tier: 'pro',
-            proExpiry: new Date(Date.now() + 30 * 86400000).toISOString(),
-          });
-        }
       }
     }
 
-    if (eventType === 'BILLING.SUBSCRIPTION.CANCELLED' || eventType === 'BILLING.SUBSCRIPTION.EXPIRED') {
-      const subscriptionId = event.resource.id;
-      const sub = await getSubscription(subscriptionId);
-      const email = sub.subscriber?.email_address;
-
+    if (event.type === 'cancellation') {
+      const email = event.email?.toLowerCase();
       if (email) {
         await updateUser(email, { tier: 'free', proExpiry: null });
       }
@@ -51,7 +48,6 @@ export default async function handler(req, res) {
     return res.status(200).json({ received: true });
   } catch (e) {
     console.error('Webhook error:', e);
-    // Always return 200 to PayPal to prevent retries
     return res.status(200).json({ received: true, error: e.message });
   }
 }

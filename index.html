@@ -103,8 +103,18 @@ tailwind.config = {
     </div>
     <button onclick="startSubscription()" id="subscribeBtn"
       class="w-full bg-primary hover:bg-indigo-600 text-white font-semibold py-3 rounded-xl transition-all mb-3">
-      <i class="fa fa-paypal"></i> Subscribe $5/month
+      <i class="fa fa-credit-card"></i> Subscribe $5/month
     </button>
+    <div class="border-t border-gray-700 my-3"></div>
+    <p class="text-xs text-gray-400 mb-3">Already subscribed? Enter your license key:</p>
+    <div class="flex gap-2 mb-2">
+      <input id="licenseInput" type="text" placeholder="Paste Gumroad license key"
+        class="flex-1 bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm focus:border-primary focus:outline-none">
+      <button onclick="verifyLicenseKey()" id="verifyBtn"
+        class="bg-gray-700 hover:bg-gray-600 text-white text-sm font-semibold py-2 px-4 rounded-lg transition-all whitespace-nowrap">
+        Verify
+      </button>
+    </div>
     <button onclick="shareToUnlock()"
       class="w-full bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2.5 rounded-xl transition-all text-sm mb-2">
       <i class="fa fa-share-alt"></i> Share to unlock 7 days free
@@ -216,7 +226,7 @@ tailwind.config = {
       </ul>
       <button onclick="startSubscription()"
         class="w-full bg-primary hover:bg-indigo-600 text-white font-semibold py-2.5 rounded-xl transition-all">
-        <i class="fa fa-paypal"></i> Subscribe
+        <i class="fa fa-credit-card"></i> Subscribe
       </button>
     </div>
 
@@ -278,11 +288,18 @@ let currentUser = null;
   // Check for subscription return
   const params = new URLSearchParams(window.location.search);
   if (params.get('subscribed') === '1') {
-    showUpgradeMsg('Payment successful! Your Pro access is being activated...');
+    showUpgradeMsg('Redirecting to payment...');
     if (currentUser) refreshUserStatus();
   }
   if (params.get('cancelled') === '1') {
     showUpgradeMsg('Payment cancelled. You can try again anytime.');
+  }
+  // Check for Gumroad license key in URL
+  const licenseKey = params.get('license');
+  if (licenseKey && currentUser) {
+    document.getElementById('licenseInput').value = licenseKey;
+    showUpgrade();
+    verifyLicenseKey();
   }
 
   // Check URL for referral code
@@ -501,7 +518,7 @@ async function startSubscription() {
 
   const btn = document.getElementById('subscribeBtn');
   btn.disabled = true;
-  btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Connecting to PayPal...';
+  btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Redirecting...';
 
   try {
     const res = await fetch('/api/subscribe', {
@@ -512,13 +529,53 @@ async function startSubscription() {
 
     if (!res.ok) throw new Error(data.error);
 
-    // Redirect to PayPal
-    window.location.href = data.approvalUrl;
+    // Redirect to Gumroad product page
+    window.location.href = data.productUrl;
   } catch (e) {
     showUpgradeMsg('Error: ' + e.message + ' — Please try again or contact @shenglizhigejack on Telegram.');
   } finally {
     btn.disabled = false;
-    btn.innerHTML = '<i class="fa fa-paypal"></i> Subscribe $5/month';
+    btn.innerHTML = '<i class="fa fa-credit-card"></i> Subscribe $5/month';
+  }
+}
+
+async function verifyLicenseKey() {
+  if (!currentUser) {
+    showLogin();
+    return;
+  }
+
+  const licenseKey = document.getElementById('licenseInput').value.trim();
+  if (!licenseKey) {
+    showUpgradeMsg('Please paste your Gumroad license key.');
+    return;
+  }
+
+  const btn = document.getElementById('verifyBtn');
+  btn.disabled = true;
+  btn.textContent = '...';
+
+  try {
+    const res = await fetch('/api/auth/verify-license', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: currentUser.email, licenseKey }),
+    });
+    const data = await res.json();
+
+    if (!res.ok) throw new Error(data.error);
+
+    currentUser.tier = 'pro';
+    localStorage.setItem('aivadesk_user', JSON.stringify(currentUser));
+    renderLoggedIn();
+    document.getElementById('upgradeModal').classList.add('hidden');
+    document.getElementById('licenseInput').value = '';
+    alert('License verified! Your Pro access is now active for 30 days.');
+  } catch (e) {
+    showUpgradeMsg('Verification failed: ' + e.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Verify';
   }
 }
 

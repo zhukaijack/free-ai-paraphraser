@@ -3,7 +3,8 @@
     "api/proxy.js": { "memory": 256, "maxDuration": 30 },
     "api/auth/register.js": { "memory": 128, "maxDuration": 10 },
     "api/auth/status.js": { "memory": 128, "maxDuration": 10 },
-    "api/subscribe.js": { "memory": 128, "maxDuration": 15 },
+    "api/auth/verify-license.js": { "memory": 128, "maxDuration": 10 },
+    "api/subscribe.js": { "memory": 128, "maxDuration": 10 },
     "api/webhook.js": { "memory": 128, "maxDuration": 15 }
   }
 }

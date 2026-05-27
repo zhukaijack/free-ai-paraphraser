@@ -1,5 +1,5 @@
-import { parseWebhookEvent } from '../../lib/gumroad.js';
-import { updateUser } from '../../lib/kv.js';
+import { parseWebhookEvent } from '../lib/gumroad.js';
+import { updateUser } from '../lib/kv.js';
 
 async function readBody(req) {
   if (req.body && typeof req.body === 'object' && !Buffer.isBuffer(req.body)) {

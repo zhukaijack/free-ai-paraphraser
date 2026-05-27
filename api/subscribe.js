@@ -1,4 +1,4 @@
-import { getProductUrl } from '../../lib/gumroad.js';
+import { getProductUrl } from '../lib/gumroad.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
